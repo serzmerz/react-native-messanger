@@ -1,14 +1,21 @@
-import {StackNavigator, SwitchNavigator} from 'react-navigation'
+import {StackNavigator, SwitchNavigator, DrawerNavigator} from 'react-navigation'
 import LaunchScreen from '../Containers/LaunchScreen/index'
 import SignInScreen from '../Containers/SignInScreen/index'
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen/index'
 
 import styles from './Styles/NavigationStyles'
 import SignUpScreen from '../Containers/SignUpScreen/index'
+import GroupScreen from '../Containers/GroupScreen'
 
 const routesAppStack = {
+  GroupScreen: {
+    screen: GroupScreen,
+    title: 'Home',
+    sagas: require('../Containers/GroupScreen/sagas')
+  },
   LaunchScreen: {
     screen: LaunchScreen,
+    title: 'Launch',
     sagas: require('../Containers/LaunchScreen/sagas')
   }
 }
@@ -29,7 +36,7 @@ export const routesByScreen = {
   ...routesAuthStack
 }
 
-const AppStack = StackNavigator(routesAppStack)
+const AppStack = DrawerNavigator(routesAppStack)
 const AuthStack = StackNavigator(routesAuthStack)
 
 const PrimaryNav = SwitchNavigator(
@@ -39,7 +46,7 @@ const PrimaryNav = SwitchNavigator(
     Auth: AuthStack
   },
   {
-    headerMode: 'none',
+    headerMode: 'screen',
     initialRouteName: 'AuthLoading',
     navigationOptions: {
       headerStyle: styles.header

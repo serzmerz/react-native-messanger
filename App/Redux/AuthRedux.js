@@ -1,6 +1,5 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { AsyncStorage } from 'react-native'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -10,7 +9,7 @@ const { Types, Creators } = createActions({
   signUpFailure: ['payload'],
   signInRequest: ['payload'],
   signInSuccess: ['payload'],
-  signInFailure: ['payload'],
+  signInFailure: ['payload']
 })
 
 export const AuthTypes = Types
@@ -60,5 +59,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_UP_FAILURE]: failureSignUp,
   [Types.SIGN_IN_REQUEST]: request,
   [Types.SIGN_IN_SUCCESS]: successSignIn,
-  [Types.SIGN_IN_FAILURE]: failureSignIn,
+  [Types.SIGN_IN_FAILURE]: failureSignIn
 })

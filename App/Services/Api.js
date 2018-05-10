@@ -1,5 +1,7 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import { select, call } from 'redux-saga/effects'
+import { AuthSelectors } from '../Redux/AuthRedux'
 
 // our "constructor"
 const create = (baseURL = 'http://192.168.0.107:3000/') => {
@@ -36,7 +38,10 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
   //
   const signUp = (payload) => api.post('signup', payload)
   const signIn = (payload) => api.post('login', payload)
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getGroups = (payload) => {
+    api.setHeaders(payload.headers)
+    return api.get('user/groups')
+  }
 
   // ------
   // STEP 3
@@ -53,8 +58,14 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
   return {
     signIn,
     signUp,
-    getUser
+    getGroups
   }
+}
+
+export function * callApi (api, arg = {}) {
+  const token = yield select(AuthSelectors.selectToken)
+  const headers = { 'Authorization': `Bearer ${token}` }
+  return yield call(api, { ...arg, headers })
 }
 
 // let's return back our create method as the default.

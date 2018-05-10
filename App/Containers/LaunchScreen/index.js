@@ -6,6 +6,10 @@ import { Images } from '../../Themes/index'
 import styles from './sheet'
 
 export default class LaunchScreen extends Component {
+  static navigationOptions = {
+    drawerLabel: 'Home'
+  };
+
   render () {
     return (
       <View style={styles.mainContainer}>
