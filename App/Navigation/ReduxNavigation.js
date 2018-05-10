@@ -4,6 +4,7 @@ import { addNavigationHelpers } from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 import AppNavigation from './AppNavigation'
+import NavigationService from '../Services/NavigationService'
 
 class ReduxNavigation extends React.Component {
   componentWillMount () {
@@ -26,7 +27,14 @@ class ReduxNavigation extends React.Component {
   }
 
   render () {
-    return <AppNavigation navigation={addNavigationHelpers({ dispatch: this.props.dispatch, state: this.props.nav, addListener: createReduxBoundAddListener('root') })} />
+    return (
+      <AppNavigation
+        navigation={addNavigationHelpers({ dispatch: this.props.dispatch, state: this.props.nav, addListener: createReduxBoundAddListener('root') })}
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef)
+        }}
+      />
+    )
   }
 }
 
