@@ -6,12 +6,19 @@ import AuthLoadingScreen from '../Containers/AuthLoadingScreen/index'
 import styles from './Styles/NavigationStyles'
 import SignUpScreen from '../Containers/SignUpScreen/index'
 import GroupScreen from '../Containers/GroupScreen'
+import FriendsScreen from '../Containers/FriendsScreen/index'
+import AddFriendScreen from '../Containers/AddFriendScreen/index'
 
 const routesAppStack = {
   GroupScreen: {
     screen: GroupScreen,
     title: 'Home',
     sagas: require('../Containers/GroupScreen/sagas')
+  },
+  FriendsScreen: {
+    screen: FriendsScreen,
+    title: 'Friends',
+    sagas: require('../Containers/FriendsScreen/sagas')
   },
   LaunchScreen: {
     screen: LaunchScreen,
@@ -31,18 +38,34 @@ const routesAuthStack = {
   }
 }
 
-export const routesByScreen = {
-  ...routesAppStack,
-  ...routesAuthStack
+const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'FriendsScreen' })
+
+const routesMainStack = {
+  AddFriend: {
+    screen: AddFriendScreen,
+    sagas: require('../Containers/AddFriendScreen/sagas')
+  },
 }
 
-const AppStack = DrawerNavigator(routesAppStack)
+export const routesByScreen = {
+  ...routesAppStack,
+  ...routesAuthStack,
+  ...routesMainStack
+}
+
+const MainStack = StackNavigator({
+  Main: AppStack,
+  ...routesMainStack
+}, {
+  // initialRouteName: 'ConfirmationPopUp',
+  headerMode: 'none'
+})
 const AuthStack = StackNavigator(routesAuthStack)
 
 const PrimaryNav = SwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: AppStack,
+    App: MainStack,
     Auth: AuthStack
   },
   {

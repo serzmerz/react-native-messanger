@@ -8,6 +8,7 @@ import ReduxPersist from '../Config/ReduxPersist'
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
   group: require('./GroupRedux').reducer,
+  friend: require('./FriendRedux').reducer,
   auth: require('./AuthRedux').reducer
 })
 

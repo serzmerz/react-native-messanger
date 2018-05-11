@@ -42,6 +42,18 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     api.setHeaders(payload.headers)
     return api.get('user/groups')
   }
+  const getFriends = (payload) => {
+    api.setHeaders(payload.headers)
+    return api.get('user/friends')
+  }
+  const searchUsers = (payload) => {
+    api.setHeaders(payload.headers)
+    return api.get('user/users', { search: payload.search })
+  }
+  const addFriend = (payload) => {
+    api.setHeaders(payload.headers)
+    return api.post(`user/friends/${payload.friendId}`)
+  }
 
   // ------
   // STEP 3
@@ -58,7 +70,10 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
   return {
     signIn,
     signUp,
-    getGroups
+    getGroups,
+    getFriends,
+    searchUsers,
+    addFriend
   }
 }
 

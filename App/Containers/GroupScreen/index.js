@@ -13,16 +13,7 @@ import { GroupSelectors } from "../../Redux/GroupRedux";
 import styles from './sheet';
 import Group from './GroupItem';
 import {Body, Header, Icon, Left, Right, Title, Button as Btn} from "native-base";
-
-const BtnHeader = ({ onPress }) => (
-  <View style={styles.header}>
-    <Button title={'New Group'} onPress={onPress} />
-  </View>
-)
-
-BtnHeader.propTypes = {
-  onPress: PropTypes.func.isRequired
-}
+import BtnHeader from "../../Components/AddHeaderButton/index";
 
 
 class Groups extends Component {
@@ -117,7 +108,7 @@ class Groups extends Component {
           data={groups}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
-          ListHeaderComponent={() => <BtnHeader onPress={this.goToNewGroup} />}
+          ListHeaderComponent={() => <BtnHeader title='Create Group' onPress={this.goToNewGroup} />}
           onRefresh={this.onRefresh}
           refreshing={isLoading}
         />

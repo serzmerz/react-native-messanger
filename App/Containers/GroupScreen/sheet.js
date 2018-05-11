@@ -66,12 +66,6 @@ export default StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   },
-  header: {
-    alignItems: 'flex-end',
-    padding: 6,
-    borderColor: '#eee',
-    borderBottomWidth: 1
-  },
   warning: {
     textAlign: 'center',
     padding: 12
