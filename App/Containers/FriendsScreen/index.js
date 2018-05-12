@@ -26,7 +26,7 @@ class FriendsScreen extends Component {
             </Btn>
           </Left>
           <Body>
-          <Title>Header</Title>
+          <Title>Friends</Title>
           </Body>
           <Right />
         </Header>

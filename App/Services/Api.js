@@ -2,6 +2,7 @@
 import apisauce from 'apisauce'
 import { select, call } from 'redux-saga/effects'
 import { AuthSelectors } from '../Redux/AuthRedux'
+import RNFetchBlob from 'react-native-fetch-blob'
 
 // our "constructor"
 const create = (baseURL = 'http://192.168.0.107:3000/') => {
@@ -58,6 +59,12 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     api.setHeaders(payload.headers)
     return api.post('user/group', payload.data)
   }
+  const updateUser = ({ headers, data }) => {
+    return RNFetchBlob.fetch('PUT', `${baseURL}user`, {
+      ...headers,
+      'Content-Type': 'multipart/form-data'
+    }, data)
+  }
 
   // ------
   // STEP 3
@@ -78,7 +85,8 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     getFriends,
     searchUsers,
     addFriend,
-    addGroup
+    addGroup,
+    updateUser
   }
 }
 

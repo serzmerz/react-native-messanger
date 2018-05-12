@@ -9,7 +9,11 @@ const { Types, Creators } = createActions({
   signUpFailure: ['payload'],
   signInRequest: ['payload'],
   signInSuccess: ['payload'],
-  signInFailure: ['payload']
+  signInFailure: ['payload'],
+  updateUserRequest: ['payload'],
+  updateUserSuccess: ['payload'],
+  updateUserFailure: ['payload'],
+  logout: null
 })
 
 export const AuthTypes = Types
@@ -44,11 +48,14 @@ export const successSignUp = (state, action) =>
   state.merge({ isLoading: false })
 
 // failed to get the avatar
-export const failureSignUp = (state, action) =>
+export const failure = (state, action) =>
   state.merge({ isLoading: false })
 
 export const successSignIn = (state, action) =>
   state.merge({ isLoading: false, isAuthorized: true, ...action.payload })
+
+export const successUserUpdate = (state, action) =>
+  state.merge({ isLoading: false, instance: action.payload })
 
 export const failureSignIn = (state, action) => INITIAL_STATE
 /* ------------- Hookup Reducers To Types ------------- */
@@ -56,8 +63,12 @@ export const failureSignIn = (state, action) => INITIAL_STATE
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_UP_REQUEST]: request,
   [Types.SIGN_UP_SUCCESS]: successSignUp,
-  [Types.SIGN_UP_FAILURE]: failureSignUp,
+  [Types.SIGN_UP_FAILURE]: failure,
   [Types.SIGN_IN_REQUEST]: request,
   [Types.SIGN_IN_SUCCESS]: successSignIn,
-  [Types.SIGN_IN_FAILURE]: failureSignIn
+  [Types.SIGN_IN_FAILURE]: failureSignIn,
+  [Types.UPDATE_USER_REQUEST]: request,
+  [Types.UPDATE_USER_SUCCESS]: successUserUpdate,
+  [Types.UPDATE_USER_FAILURE]: failure,
+  [Types.LOGOUT]: failureSignIn
 })

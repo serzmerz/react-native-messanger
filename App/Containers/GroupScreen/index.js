@@ -61,7 +61,7 @@ class Groups extends Component {
               </Btn>
             </Left>
             <Body>
-            <Title>Header</Title>
+            <Title>Chats</Title>
             </Body>
             <Right />
           </Header>
@@ -80,7 +80,7 @@ class Groups extends Component {
               </Btn>
             </Left>
             <Body>
-            <Title>Header</Title>
+            <Title>Chats</Title>
             </Body>
             <Right />
           </Header>
@@ -100,7 +100,7 @@ class Groups extends Component {
             </Btn>
           </Left>
           <Body>
-          <Title>Header</Title>
+          <Title>Chats</Title>
           </Body>
           <Right />
         </Header>
@@ -108,7 +108,7 @@ class Groups extends Component {
           data={groups}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
-          ListHeaderComponent={() => <BtnHeader title='Create Group' onPress={this.goToNewGroup} />}
+          ListHeaderComponent={() => <BtnHeader title='Create Chat' onPress={this.goToNewGroup} />}
           onRefresh={this.onRefresh}
           refreshing={isLoading}
         />

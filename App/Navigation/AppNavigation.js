@@ -10,6 +10,7 @@ import FriendsScreen from '../Containers/FriendsScreen/index'
 import AddFriendScreen from '../Containers/AddFriendScreen/index'
 import AddGroupScreen from '../Containers/AddGroupScreen/index'
 import FinilizeAddGroupScreen from '../Containers/AddGroupScreen/FinilizeAddGroupScreen'
+import SettingsScreen from '../Containers/SettingsScreen/index'
 
 const routesAppStack = {
   GroupScreen: {
@@ -26,6 +27,10 @@ const routesAppStack = {
     screen: AddGroupScreen,
     title: 'Create Group',
     sagas: require('../Containers/AddGroupScreen/sagas')
+  },
+  SettingsScreen: {
+    screen: SettingsScreen,
+    sagas: require('../Containers/SettingsScreen/sagas')
   },
   LaunchScreen: {
     screen: LaunchScreen,
@@ -45,7 +50,7 @@ const routesAuthStack = {
   }
 }
 
-const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'AddGroupScreen' })
+const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'SettingsScreen' })
 
 const routesMainStack = {
   AddFriend: {
