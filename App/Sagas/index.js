@@ -9,7 +9,7 @@ const checkPattern = ({ type }) => {
 }
 
 function * failureSaga ({ payload }) {
-  ToastAndroid.show(payload.error, ToastAndroid.SHORT);
+  ToastAndroid.show(payload.error, ToastAndroid.SHORT)
 }
 
 /* ------------- Connect Types To Sagas ------------- */

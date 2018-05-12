@@ -43,7 +43,7 @@ class Groups extends Component {
 
   goToNewGroup() {
     const { navigate } = this.props.navigation;
-    navigate('NewGroup');
+    navigate('AddGroupScreen');
   }
 
   renderItem = ({ item }) => <Group group={item} goToMessages={this.goToMessages} />;

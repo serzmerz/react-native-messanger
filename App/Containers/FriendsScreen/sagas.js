@@ -1,17 +1,8 @@
-import { put, fork } from 'redux-saga/effects'
-import FriendActions from '../../Redux/FriendRedux'
-import {callApi} from '../../Services/Api'
-
-function * ensureGetFriends (api) {
-  yield put(FriendActions.getFriendsRequest())
-  const response = yield callApi(api.getFriends)
-  if (response.ok) {
-    yield put(FriendActions.getFriendsSuccess(response.data))
-  } else {
-    yield put(FriendActions.getFriendsFailure(response.data))
-  }
-}
+import { fork, select } from 'redux-saga/effects'
+import {ensureGetFriends} from '../../Sagas/FriendSagas'
+import {FriendSelectors} from '../../Redux/FriendRedux'
 
 export default function * (api) {
-  yield fork(ensureGetFriends, api)
+  const isDataLoading = yield select(FriendSelectors.selectIsDataLoading)
+  if (!isDataLoading) yield fork(ensureGetFriends, api)
 }

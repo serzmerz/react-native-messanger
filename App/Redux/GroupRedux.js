@@ -6,7 +6,10 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   getGroupsRequest: null,
   getGroupsSuccess: ['payload'],
-  getGroupsFailure: ['payload']
+  getGroupsFailure: ['payload'],
+  addGroupRequest: ['payload'],
+  addGroupSuccess: ['payload'],
+  addGroupFailure: ['payload']
 })
 
 export const GroupTypes = Types
@@ -40,10 +43,14 @@ export const getGroupsSuccess = (state, action) =>
 export const getGroupsFailure = (state, action) =>
   state.merge({ isLoading: false })
 
+export const addGroupSuccess = (state, action) =>
+  state.update('data', (data) => data.concat([action.payload]))
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_GROUPS_REQUEST]: request,
   [Types.GET_GROUPS_SUCCESS]: getGroupsSuccess,
-  [Types.GET_GROUPS_FAILURE]: getGroupsFailure
+  [Types.GET_GROUPS_FAILURE]: getGroupsFailure,
+  [Types.ADD_GROUP_SUCCESS]: addGroupSuccess
 })

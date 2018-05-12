@@ -20,6 +20,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   isLoading: false,
+  isDataLoading: false,
   data: [],
   searchFriends: []
 })
@@ -29,6 +30,7 @@ export const INITIAL_STATE = Immutable({
 export const FriendSelectors = {
   selectIsLoading: state => state.friend.isLoading,
   selectFriends: state => state.friend.data,
+  selectIsDataLoading: state => state.friend.isDataLoading,
   selectSearchFriends: state => state.friend.searchFriends
 }
 
@@ -40,7 +42,7 @@ export const request = (state) =>
 
 // successful avatar lookup
 export const getFriendsSuccess = (state, action) =>
-  state.merge({ isLoading: false, data: action.payload })
+  state.merge({ isLoading: false, isDataLoading: true, data: action.payload })
 
 // failed to get the avatar
 export const getFriendsFailure = (state, action) =>
@@ -50,7 +52,7 @@ export const getSearchFriendsSuccess = (state, action) =>
   state.merge({ isLoading: false, searchFriends: action.payload })
 
 export const addFriendSuccess = (state, action) =>
-  state.update('data', (data, friend) => data.concat([action.payload]))
+  state.update('data', (data) => data.concat([action.payload]))
 
 /* ------------- Hookup Reducers To Types ------------- */
 

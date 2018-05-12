@@ -1,6 +1,7 @@
 import { takeLatest, put } from 'redux-saga/effects'
 import FriendsActions, { FriendTypes } from '../../Redux/FriendRedux'
 import {callApi} from '../../Services/Api'
+import { ToastAndroid } from 'react-native'
 
 function * ensureSearchUsers (api, { payload }) {
   const response = yield callApi(api.searchUsers, { search: payload })
@@ -15,6 +16,7 @@ function * ensureAddFriend (api, { payload }) {
   const response = yield callApi(api.addFriend, { friendId: payload.id })
   if (response.ok) {
     yield put(FriendsActions.addFriendSuccess(payload))
+    ToastAndroid.show('Your add user to friends', ToastAndroid.SHORT)
   } else {
     yield put(FriendsActions.addFriendFailure(response.data))
   }

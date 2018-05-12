@@ -11,7 +11,7 @@ const renderItem = (func = () => null) => ({ item }) => (
       <Thumbnail source={item.image ? { uri: item.image } : reactLogo} />
     </Left>
     <Body>
-      <TouchableOpacity onPress={func(item)} disabled={!func}>
+      <TouchableOpacity onPress={func(item)} disabled={!func(item)}>
         <Text>{item.username}</Text>
         <Text note>Doing what you like will always keep you happy . .</Text>
       </TouchableOpacity>

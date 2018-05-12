@@ -8,6 +8,8 @@ import SignUpScreen from '../Containers/SignUpScreen/index'
 import GroupScreen from '../Containers/GroupScreen'
 import FriendsScreen from '../Containers/FriendsScreen/index'
 import AddFriendScreen from '../Containers/AddFriendScreen/index'
+import AddGroupScreen from '../Containers/AddGroupScreen/index'
+import FinilizeAddGroupScreen from '../Containers/AddGroupScreen/FinilizeAddGroupScreen'
 
 const routesAppStack = {
   GroupScreen: {
@@ -19,6 +21,11 @@ const routesAppStack = {
     screen: FriendsScreen,
     title: 'Friends',
     sagas: require('../Containers/FriendsScreen/sagas')
+  },
+  AddGroupScreen: {
+    screen: AddGroupScreen,
+    title: 'Create Group',
+    sagas: require('../Containers/AddGroupScreen/sagas')
   },
   LaunchScreen: {
     screen: LaunchScreen,
@@ -38,13 +45,17 @@ const routesAuthStack = {
   }
 }
 
-const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'FriendsScreen' })
+const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'AddGroupScreen' })
 
 const routesMainStack = {
   AddFriend: {
     screen: AddFriendScreen,
     sagas: require('../Containers/AddFriendScreen/sagas')
   },
+  FinilizeAddGroupScreen: {
+    screen: FinilizeAddGroupScreen,
+    sagas: require('../Containers/AddGroupScreen/sagas')
+  }
 }
 
 export const routesByScreen = {
@@ -57,7 +68,6 @@ const MainStack = StackNavigator({
   Main: AppStack,
   ...routesMainStack
 }, {
-  // initialRouteName: 'ConfirmationPopUp',
   headerMode: 'none'
 })
 const AuthStack = StackNavigator(routesAuthStack)
