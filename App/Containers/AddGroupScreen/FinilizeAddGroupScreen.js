@@ -3,6 +3,7 @@ import {Image, TextInput, TouchableOpacity, View} from 'react-native'
 import {Body, Header, Icon, Left, Right, Title, Button as Btn, Content, Text} from 'native-base'
 import reactLogo from '../../Images/200px-React-icon.svg.png'
 import GroupsActions, {GroupSelectors} from '../../Redux/GroupRedux'
+import ImagePicker from 'react-native-image-crop-picker'
 
 // Styles
 import styles from './sheet'
@@ -12,7 +13,8 @@ import {connect} from 'react-redux'
 
 class FinilizeAddGroupScreen extends Component {
   state = {
-    name: ''
+    name: '',
+    icon: null,
   }
 
   componentWillReceiveProps (nextProps) {
@@ -24,6 +26,17 @@ class FinilizeAddGroupScreen extends Component {
   addGroupHandler = () => {
     const { params } = this.props.navigation.state
     this.props.addGroup({ ...this.state, userIds: params.selected  })
+  }
+
+  getIcon = () => {
+    ImagePicker.openPicker({
+      width: 100,
+      height: 100,
+      cropping: true,
+      cropperCircleOverlay: true,
+    }).then((file) => {
+      this.setState({ icon: file });
+    });
   }
 
   render () {
@@ -53,7 +66,10 @@ class FinilizeAddGroupScreen extends Component {
             >
               <Image
                 style={styles.groupImage}
-                source={reactLogo}
+                source={this.state.icon
+                  ? { uri: this.state.icon.path}
+                  :reactLogo
+                }
               />
               <Text>edit</Text>
             </TouchableOpacity>

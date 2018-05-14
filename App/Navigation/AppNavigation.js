@@ -50,7 +50,7 @@ const routesAuthStack = {
   }
 }
 
-const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'SettingsScreen' })
+const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'AddGroupScreen' })
 
 const routesMainStack = {
   AddFriend: {

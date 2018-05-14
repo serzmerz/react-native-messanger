@@ -37,7 +37,6 @@ class Settings extends Component {
       cropping: true,
       cropperCircleOverlay: true,
     }).then((file) => {
-      console.log(file)
       this.setState({ avatar: file });
     });
   }

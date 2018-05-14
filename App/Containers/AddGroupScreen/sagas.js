@@ -4,16 +4,25 @@ import {ensureGetFriends} from '../../Sagas/FriendSagas'
 import {FriendSelectors} from '../../Redux/FriendRedux'
 import GroupsActions, {GroupTypes} from '../../Redux/GroupRedux'
 import {callApi} from '../../Services/Api'
+import RNFetchBlob from 'react-native-fetch-blob'
 
-const serializeGroupData = group => ({...group, userIds: group.userIds.map(user => user.id)})
+const serializeGroupData = group => ({ data: [
+  { name: 'name', data: group.name },
+  { name: 'userIds', data: JSON.stringify(group.userIds.map(user => user.id)) },
+  {
+    name: 'icon',
+    filename: 'icon.jpg',
+    data: group.icon ? RNFetchBlob.wrap(group.icon.path) : null
+  }
+]})
 
 function * ensureAddGroup (api, { payload }) {
-  const response = yield callApi(api.addGroup, { data: serializeGroupData(payload) })
-  if (response.ok) {
-    yield put(GroupsActions.addGroupSuccess(response.data))
+  try {
+    const response = yield callApi(api.addGroup, serializeGroupData(payload))
+    yield put(GroupsActions.addGroupSuccess(response.json()))
     ToastAndroid.show('Your add group success', ToastAndroid.SHORT)
-  } else {
-    yield put(GroupsActions.addGroupFailure(response.data))
+  } catch (e) {
+    yield put(GroupsActions.addGroupFailure(e.json()))
   }
 }
 

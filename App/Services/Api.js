@@ -55,9 +55,12 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     api.setHeaders(payload.headers)
     return api.post(`user/friends/${payload.friendId}`)
   }
-  const addGroup = (payload) => {
-    api.setHeaders(payload.headers)
-    return api.post('user/group', payload.data)
+  const addGroup = ({ headers, data }) => {
+    console.log(data)
+    return RNFetchBlob.fetch('POST', `${baseURL}user/group`, {
+      ...headers,
+      'Content-Type': 'multipart/form-data'
+    }, data)
   }
   const updateUser = ({ headers, data }) => {
     return RNFetchBlob.fetch('PUT', `${baseURL}user`, {
