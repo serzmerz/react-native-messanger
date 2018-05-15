@@ -4,8 +4,7 @@ import {
   FlatList,
   ActivityIndicator,
   Text,
-  View,
-  Button
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import {compose} from "redux";
@@ -22,26 +21,19 @@ class Groups extends Component {
     title: 'Chats',
   };
 
-  constructor(props) {
-    super(props);
-    this.goToMessages = this.goToMessages.bind(this);
-    this.goToNewGroup = this.goToNewGroup.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
-  }
-
-  onRefresh() {
+  onRefresh = () => {
     this.props.refetch();
     // faking unauthorized status
   }
 
   keyExtractor = item => item.id;
 
-  goToMessages(group) {
+  goToMessages = (group) => {
     const { navigate } = this.props.navigation;
-    navigate('Messages', { groupId: group.id, title: group.name, icon: group.icon });
+    navigate('MessagesScreen', { groupId: group.id, title: group.name, icon: group.icon });
   }
 
-  goToNewGroup() {
+  goToNewGroup = () => {
     const { navigate } = this.props.navigation;
     navigate('AddGroupScreen');
   }
@@ -56,7 +48,7 @@ class Groups extends Component {
         <View style={[styles.loading, styles.container]}>
           <Header>
             <Left>
-              <Btn onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
+              <Btn title='menu' onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
                 <Icon name='menu' />
               </Btn>
             </Left>
@@ -75,7 +67,7 @@ class Groups extends Component {
         <View style={styles.container}>
           <Header>
             <Left>
-              <Btn onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
+              <Btn title='menu' onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
                 <Icon name='menu' />
               </Btn>
             </Left>
@@ -84,7 +76,7 @@ class Groups extends Component {
             </Body>
             <Right />
           </Header>
-          <BtnHeader onPress={this.goToNewGroup} />
+          <BtnHeader title='Create Chat' onPress={this.goToNewGroup} />
           <Text style={styles.warning}>{'You do not have any groups.'}</Text>
         </View>
       );
@@ -95,7 +87,7 @@ class Groups extends Component {
       <View style={styles.container}>
         <Header>
           <Left>
-            <Btn onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
+            <Btn title='menu' onPress={() => this.props.navigation.navigate('DrawerToggle')} transparent>
               <Icon name='menu' />
             </Btn>
           </Left>

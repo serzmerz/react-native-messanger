@@ -43,6 +43,10 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     api.setHeaders(payload.headers)
     return api.get('user/groups')
   }
+  const getGroup = (payload) => {
+    api.setHeaders(payload.headers)
+    return api.get(`user/group/${payload.id}`)
+  }
   const getFriends = (payload) => {
     api.setHeaders(payload.headers)
     return api.get('user/friends')
@@ -56,7 +60,6 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     return api.post(`user/friends/${payload.friendId}`)
   }
   const addGroup = ({ headers, data }) => {
-    console.log(data)
     return RNFetchBlob.fetch('POST', `${baseURL}user/group`, {
       ...headers,
       'Content-Type': 'multipart/form-data'
@@ -67,6 +70,21 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
       ...headers,
       'Content-Type': 'multipart/form-data'
     }, data)
+  }
+  const updateGroup = ({ headers, data, id }) => {
+    return RNFetchBlob.fetch('PUT', `${baseURL}user/group/${id}`, {
+      ...headers,
+      'Content-Type': 'multipart/form-data'
+    }, data)
+  }
+
+  const leaveGroup = ({ headers, id }) => {
+    api.setHeaders(headers)
+    return api.post(`user/group/${id}/leave`)
+  }
+  const removeGroup = ({ headers, id }) => {
+    api.setHeaders(headers)
+    return api.delete(`user/group/${id}`)
   }
 
   // ------
@@ -89,7 +107,11 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     searchUsers,
     addFriend,
     addGroup,
-    updateUser
+    updateUser,
+    getGroup,
+    updateGroup,
+    leaveGroup,
+    removeGroup
   }
 }
 

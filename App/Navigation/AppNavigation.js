@@ -5,12 +5,14 @@ import AuthLoadingScreen from '../Containers/AuthLoadingScreen/index'
 
 import styles from './Styles/NavigationStyles'
 import SignUpScreen from '../Containers/SignUpScreen/index'
-import GroupScreen from '../Containers/GroupScreen'
+import GroupScreen from '../Containers/GroupScreen/index'
 import FriendsScreen from '../Containers/FriendsScreen/index'
 import AddFriendScreen from '../Containers/AddFriendScreen/index'
 import AddGroupScreen from '../Containers/AddGroupScreen/index'
 import FinilizeAddGroupScreen from '../Containers/AddGroupScreen/FinilizeAddGroupScreen'
 import SettingsScreen from '../Containers/SettingsScreen/index'
+import MessagesScreen from '../Containers/MessagesScreen/index'
+import GroupDetailsScreen from '../Containers/GroupDetailsScreen/index'
 
 const routesAppStack = {
   GroupScreen: {
@@ -30,6 +32,7 @@ const routesAppStack = {
   },
   SettingsScreen: {
     screen: SettingsScreen,
+    title: 'Settings',
     sagas: require('../Containers/SettingsScreen/sagas')
   },
   LaunchScreen: {
@@ -50,7 +53,7 @@ const routesAuthStack = {
   }
 }
 
-const AppStack = DrawerNavigator(routesAppStack, { initialRouteName: 'AddGroupScreen' })
+const AppStack = DrawerNavigator(routesAppStack)
 
 const routesMainStack = {
   AddFriend: {
@@ -60,6 +63,14 @@ const routesMainStack = {
   FinilizeAddGroupScreen: {
     screen: FinilizeAddGroupScreen,
     sagas: require('../Containers/AddGroupScreen/sagas')
+  },
+  MessagesScreen: {
+    screen: MessagesScreen,
+    sagas: require('../Containers/MessagesScreen/sagas')
+  },
+  GroupDetailsScreen: {
+    screen: GroupDetailsScreen,
+    sagas: require('../Containers/GroupDetailsScreen/sagas')
   }
 }
 
