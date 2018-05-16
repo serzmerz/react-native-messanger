@@ -87,6 +87,11 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     return api.delete(`user/group/${id}`)
   }
 
+  const getMessages = ({ headers, id }) => {
+    api.setHeaders(headers)
+    return api.get(`message/group/${id}`)
+  }
+
   // ------
   // STEP 3
   // ------
@@ -111,7 +116,8 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     getGroup,
     updateGroup,
     leaveGroup,
-    removeGroup
+    removeGroup,
+    getMessages
   }
 }
 

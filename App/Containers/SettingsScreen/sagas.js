@@ -17,11 +17,16 @@ const serializeUserData = (data) => {
   })
 }
 
+const serializeUser = data => ({ ...data, instance: { ...data.instance, _id: data.instance.id } })
+
 function * ensureUpdateUser (api, { payload }) {
   try {
     const response = yield callApi(api.updateUser, serializeUserData(payload))
-    yield call(AsyncStorage.setItem, 'auth', response.data)
-    yield put(AuthActions.updateUserSuccess(response.json()))
+    const responseJson = response.json()
+    const user = serializeUser(responseJson)
+    console.log(user)
+    yield call(AsyncStorage.setItem, 'auth', JSON.stringify(user))
+    yield put(AuthActions.updateUserSuccess(user))
   } catch (e) {
     yield put(AuthActions.updateUserFailure(e.json()))
   }

@@ -16,6 +16,7 @@ class AuthLoadingScreen extends Component {
 
   constructor(props) {
     super (props)
+    // AsyncStorage.clear()
     this._bootstrapAsync()
   }
 

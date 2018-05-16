@@ -1,17 +1,28 @@
-/*import { fork, put } from 'redux-saga/effects'
-import GroupActions from '../../Redux/GroupRedux'
+import { fork, put } from 'redux-saga/effects'
+import MessageActions from '../../Redux/MessageRedux'
 import {callApi} from '../../Services/Api'
 
-export default function * (api, params) {
-  yield fork(ensureGetGroup, api, params)
+function messagesForGiftedChat (messages) {
+  return messages.map(message => ({
+    ...message,
+    // image: message.image.medium.url,
+    // text: message.image.medium.url ? null : message.text,
+    _id: message.id,
+    user: { ...message.User, _id: message.User.id }
+  }))
 }
 
-function * ensureGetGroup (api, params) {
-  yield put(GroupActions.getGroupRequest())
-  const response = yield callApi(api.getGroup, { id: params.id })
+export default function * (api, params) {
+  yield fork(ensureGetMessages, api, params)
+}
+
+function * ensureGetMessages (api, params) {
+  yield put(MessageActions.getMessagesRequest())
+  console.log(params)
+  const response = yield callApi(api.getMessages, { id: params.groupId })
   if (response.ok) {
-    yield put(GroupActions.getGroupSuccess(response.data))
+    yield put(MessageActions.getMessagesSuccess(messagesForGiftedChat(response.data)))
   } else {
-    yield put(GroupActions.getGroupFailure(response.data))
+    yield put(MessageActions.getMessagesFailure(response.data))
   }
-}*/
+}
