@@ -92,6 +92,13 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     return api.get(`message/group/${id}`)
   }
 
+  const addMessage = ({ headers, data, id }) => {
+    return RNFetchBlob.fetch('POST', `${baseURL}message/group/${id}`, {
+      ...headers,
+      'Content-Type': 'multipart/form-data'
+    }, data)
+  }
+
   // ------
   // STEP 3
   // ------
@@ -117,7 +124,8 @@ const create = (baseURL = 'http://192.168.0.107:3000/') => {
     updateGroup,
     leaveGroup,
     removeGroup,
-    getMessages
+    getMessages,
+    addMessage
   }
 }
 

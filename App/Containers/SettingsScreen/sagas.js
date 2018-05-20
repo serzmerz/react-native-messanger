@@ -1,8 +1,8 @@
-import { takeLatest, put, call } from 'redux-saga/effects'
+import { takeLatest, put, call, select } from 'redux-saga/effects'
 import { AsyncStorage } from 'react-native'
 import RNFetchBlob from 'react-native-fetch-blob'
 import {callApi} from '../../Services/Api'
-import AuthActions, {AuthTypes} from '../../Redux/AuthRedux'
+import AuthActions, {AuthSelectors, AuthTypes} from '../../Redux/AuthRedux'
 
 const serializeUserData = (data) => {
   return ({
@@ -17,18 +17,22 @@ const serializeUserData = (data) => {
   })
 }
 
-const serializeUser = data => ({ ...data, instance: { ...data.instance, _id: data.instance.id } })
+const serializeUser = (data, token) => ({ token, instance: { ...data, _id: data.id } })
 
 function * ensureUpdateUser (api, { payload }) {
   try {
     const response = yield callApi(api.updateUser, serializeUserData(payload))
     const responseJson = response.json()
-    const user = serializeUser(responseJson)
-    console.log(user)
-    yield call(AsyncStorage.setItem, 'auth', JSON.stringify(user))
-    yield put(AuthActions.updateUserSuccess(user))
+    if (response.respInfo.status === 200) {
+      const token = yield select(AuthSelectors.selectToken)
+      const user = serializeUser(responseJson, token)
+      yield call(AsyncStorage.setItem, 'auth', JSON.stringify(user))
+      yield put(AuthActions.updateUserSuccess(user.instance))
+    } else {
+      yield put(AuthActions.updateUserFailure(responseJson))
+    }
   } catch (e) {
-    yield put(AuthActions.updateUserFailure(e.json()))
+    yield put(AuthActions.updateUserFailure())
   }
 }
 

@@ -9,4 +9,6 @@ YellowBox.ignoreWarnings([
   'Warning: componentWillUpdate is deprecated'
 ])
 
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ? GLOBAL.originalXMLHttpRequest : GLOBAL.XMLHttpRequest
+
 AppRegistry.registerComponent('Hyper', () => App)

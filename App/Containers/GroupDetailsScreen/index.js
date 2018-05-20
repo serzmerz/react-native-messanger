@@ -16,13 +16,6 @@ class GroupDetailsScreen extends Component {
     name: null,
   }
 
-  componentWillReceiveProps (nextProps) {
-    if(!nextProps.group) {
-      // this.props.navigation.navigate('GroupScreen')
-      // TODO redirect
-    }
-  }
-
   getIcon = () => {
     ImagePicker.openPicker({
       width: 100,
@@ -100,7 +93,7 @@ class GroupDetailsScreen extends Component {
     return (
       <Header>
         <Left>
-          <Btn title='menu' onPress={() => this.props.navigation.goBack()} transparent>
+          <Btn title='menu' onPress={() => this.props.navigation.pop()} transparent>
             <Icon name='arrow-back' />
           </Btn>
         </Left>

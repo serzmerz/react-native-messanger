@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import reactLogo from '../../../Images/200px-React-icon.svg.png'
+import Config from 'react-native-config'
 
 const styles = StyleSheet.create({
   list: {
@@ -61,7 +62,7 @@ export class SelectedUserListItem extends Component {
         <View>
           <Image
             style={styles.itemImage}
-            source={user.image ? { uri: user.image } : reactLogo}
+            source={user.image ? { uri: `${Config.API_URL}${user.image}` } : reactLogo}
           />
           <TouchableOpacity onPress={this.remove} style={styles.itemIcon}>
             <Icon

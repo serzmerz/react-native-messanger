@@ -10,6 +10,7 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import styles from './sheet'
 import reactLogo from '../../Images/200px-React-icon.svg.png'
+import Config from 'react-native-config'
 
 const formatCreatedAt = createdAt => moment(createdAt).calendar(null, {
   sameDay: '[Today]',
@@ -38,7 +39,7 @@ class Group extends Component {
         <View style={styles.groupContainer}>
           <Image
             style={styles.groupImage}
-            source={icon ? { uri: icon } : reactLogo}
+            source={icon ? { uri: `${Config.API_URL}${icon}` } : reactLogo}
           />
           <View style={styles.groupTextContainer}>
             <View style={styles.groupTitleContainer}>

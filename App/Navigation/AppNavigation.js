@@ -1,5 +1,4 @@
 import {StackNavigator, SwitchNavigator, DrawerNavigator} from 'react-navigation'
-import LaunchScreen from '../Containers/LaunchScreen/index'
 import SignInScreen from '../Containers/SignInScreen/index'
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen/index'
 
@@ -27,18 +26,13 @@ const routesAppStack = {
   },
   AddGroupScreen: {
     screen: AddGroupScreen,
-    title: 'Create Group',
+    title: 'Create group',
     sagas: require('../Containers/AddGroupScreen/sagas')
   },
   SettingsScreen: {
     screen: SettingsScreen,
     title: 'Settings',
     sagas: require('../Containers/SettingsScreen/sagas')
-  },
-  LaunchScreen: {
-    screen: LaunchScreen,
-    title: 'Launch',
-    sagas: require('../Containers/LaunchScreen/sagas')
   }
 }
 
@@ -86,7 +80,7 @@ const MainStack = StackNavigator({
 }, {
   headerMode: 'none'
 })
-const AuthStack = StackNavigator(routesAuthStack)
+const AuthStack = StackNavigator(routesAuthStack, { headerMode: 'none' })
 
 const PrimaryNav = SwitchNavigator(
   {

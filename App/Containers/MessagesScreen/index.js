@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import {Text, Image, View, TouchableOpacity} from 'react-native'
 import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat'
 import reactLogo from '../../Images/200px-React-icon.svg.png'
-import {connect} from "react-redux";
+import {connect} from "react-redux"
+import Config from 'react-native-config'
+import ImagePicker from 'react-native-image-crop-picker'
 
 // Styles
 import styles from './sheet'
@@ -20,17 +22,15 @@ class MessagesScreen extends Component {
   }
 
   onSend = (messages = []) => {
-    console.log(messages)
     this.props.addMessage(messages[0])
   }
 
   renderCustomActions = (props) => {
     const options = {
-      'Action 1': (props) => {
-        alert('option 1');
-      },
-      'Action 2': (props) => {
-        alert('option 2');
+      'Select from gallery': () => {
+        ImagePicker.openPicker({}).then(image => {
+          props.onSend([{ image: image.path }])
+        });
       },
       'Cancel': () => {},
     };
@@ -74,7 +74,7 @@ class MessagesScreen extends Component {
             <View style={styles.title}>
               <Image
                 style={styles.titleImage}
-                source={icon ? { uri: icon } : reactLogo}
+                source={icon ? { uri: `${Config.API_URL}${icon}` } : reactLogo}
               />
               <Text style={styles.headerText}>{title}</Text>
             </View>

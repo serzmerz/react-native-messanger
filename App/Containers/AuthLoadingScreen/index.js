@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, ActivityIndicator, AsyncStorage } from 'react-native'
+import {View, ActivityIndicator, AsyncStorage, ImageBackground} from 'react-native'
 import Actions  from '../../Redux/AuthRedux'
+import background from '../../Images/background.jpg'
 
 // Styles
 import styles from './sheet'
@@ -33,9 +34,9 @@ class AuthLoadingScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
+      <ImageBackground style={styles.container} source={background} resizeMode="cover">
+        <ActivityIndicator color="#fff" />
+      </ImageBackground>
     )
   }
 }

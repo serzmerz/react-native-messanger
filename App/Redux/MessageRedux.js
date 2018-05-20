@@ -1,5 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import { GiftedChat } from 'react-native-gifted-chat/src/GiftedChat'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -44,7 +45,7 @@ export const failure = (state, action) =>
   state.merge({ isLoading: false })
 
 export const addMessageRequest = (state, action) =>
-  state.update('data', (data) => [action.payload, ...data])
+  state.update('data', (data) => GiftedChat.append(data, action.payload))
 
 /* ------------- Hookup Reducers To Types ------------- */
 
