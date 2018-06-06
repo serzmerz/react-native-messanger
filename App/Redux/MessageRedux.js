@@ -10,7 +10,8 @@ const { Types, Creators } = createActions({
   getMessagesFailure: ['payload'],
   addMessageRequest: ['payload'],
   addMessageSuccess: ['payload'],
-  addMessageFailure: ['payload']
+  addMessageFailure: ['payload'],
+  addMessageLocal: ['payload']
 })
 
 export const MessageTypes = Types
@@ -53,5 +54,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_MESSAGES_REQUEST]: request,
   [Types.GET_MESSAGES_SUCCESS]: getMessagesSuccess,
   [Types.GET_MESSAGES_FAILURE]: failure,
-  [Types.ADD_MESSAGE_REQUEST]: addMessageRequest
+  [Types.ADD_MESSAGE_REQUEST]: addMessageRequest,
+  [Types.ADD_MESSAGE_LOCAL]: addMessageRequest,
 })

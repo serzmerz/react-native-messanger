@@ -1,7 +1,6 @@
 import { takeEvery, fork } from 'redux-saga/effects'
 import { NavigationActions } from 'react-navigation'
 import { ToastAndroid } from 'react-native'
-import io from 'socket.io-client'
 import Config from 'react-native-config'
 import API from '../Services/Api'
 import nav from './NavigatorSagas'
@@ -20,9 +19,9 @@ export default function * root () {
   const navigator = nav(API.create(Config.API_URL))
   yield takeEvery([NavigationActions.BACK, NavigationActions.NAVIGATE], navigator)
   yield takeEvery(checkPattern, failureSaga)
-  yield fork(watchSocketSaga)
+  // yield fork(watchSocketSaga)
 }
 
 function * watchSocketSaga () {
-  const socket = io(Config.API_URL)
+  // const socket = io(Config.API_URL)
 }

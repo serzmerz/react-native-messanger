@@ -1,8 +1,10 @@
-import { fork, put, takeLatest } from 'redux-saga/effects'
+import { fork, put, takeLatest, call, take } from 'redux-saga/effects'
+import {eventChannel} from 'redux-saga'
 import MessageActions, { MessageTypes } from '../../Redux/MessageRedux'
 import RNFetchBlob from 'react-native-fetch-blob'
 import Config from 'react-native-config'
 import {callApi} from '../../Services/Api'
+import socket from '../../Lib/socket'
 
 function messagesForGiftedChat (messages) {
   return messages.map(message => ({
@@ -31,6 +33,7 @@ function serializeMessage (payload, id) {
 export default function * (api, params) {
   yield fork(ensureGetMessages, api, params)
   yield takeLatest(MessageTypes.ADD_MESSAGE_REQUEST, ensureSendMessage, api, params)
+  yield fork(watchSubscribe, params)
 }
 
 function * ensureGetMessages (api, params) {
@@ -45,12 +48,29 @@ function * ensureGetMessages (api, params) {
 
 function * ensureSendMessage (api, params, { payload }) {
   try {
-    console.log(params)
-    console.log(payload)
-    const data = yield callApi(api.addMessage, serializeMessage(payload, params.groupId))
-    console.log(data)
+    yield callApi(api.addMessage, serializeMessage(payload, params.groupId))
     yield put(MessageActions.addMessageSuccess())
   } catch (e) {
     yield put(MessageActions.addMessageFailure(e))
   }
+}
+
+function * watchSubscribe (params) {
+  socket.emit('unsubscribe')
+  socket.emit('subscribe', {room: params.groupId})
+  const channel = yield call(subscribe, socket)
+  while (true) {
+    let payload = yield take(channel)
+    yield put(MessageActions.addMessageLocal(payload))
+  }
+}
+
+function subscribe (socket) {
+  return eventChannel(emit => {
+    socket.on('chat message', (message) => {
+      const parsedMessage = [JSON.parse(message)]
+      emit(messagesForGiftedChat(parsedMessage)[0])
+    })
+    return () => {}
+  })
 }
